@@ -1,7 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
+import  { sanityClient } from './sanity';
+import { useState,useEffect} from 'react';
 
 function App() {
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const query = `*[_type == "category"]{
+          _id,
+          title,
+          description,
+          slug,
+          "imageUrl": image.asset->url
+        }`;
+
+        const results = await sanityClient.fetch(query);
+        setCategories(results);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
