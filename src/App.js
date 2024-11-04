@@ -1,72 +1,31 @@
-import { createBrowserRouter, RouterProvider, Route, Outlet } from 'react-router-dom';
-import Layout from './components/Layout';
-import Home from './pages/Home';
-// import logo from './logo.svg';
-// import './App.css';
-// import  { sanityClient } from './sanity';
-// import { useState,useEffect} from 'react';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Layout from "./components/Containers/Layout";
+import Home from "./pages/Home";
+import Post from "./pages/Post";
+import AppProviders from "./context/AppProviders";
 
-// function App() {
-//   const [categories, setCategories] = useState([]);
-//   useEffect(() => {
-//     const fetchCategories = async () => {
-//       try {
-//         const query = `*[_type == "category"]{
-//           _id,
-//           title,
-//           description,
-//           slug,
-//           "imageUrl": image.asset->url
-//         }`;
-
-//         const results = await sanityClient.fetch(query);
-//         setCategories(results);
-//       } catch (error) {
-//         console.error("Error fetching categories:", error);
-//       }
-//     };
-
-//     fetchCategories();
-//   }, []);
-
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Layout />,          // Main layout
+    path: "/",
+    element: <Layout />,
     children: [
       {
         index: true,
-        element: <Home />,         // Home page (default child route)
+        element: <Home />,
       },
-      
+      {
+        path: "/:id",
+        element: <Post />,
+      },
     ],
   },
 ]);
-const App =()=>{
-  return(
-     <RouterProvider router={router} />
-  )
-}
+const App = () => {
+  return (
+    <AppProviders>
+      <RouterProvider router={router} />
+    </AppProviders>
+  );
+};
 
-export default App
+export default App;
