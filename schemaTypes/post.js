@@ -49,6 +49,72 @@ export default defineType({
       title: 'Body',
       type: 'blockContent',
     }),
+    defineField({
+      name: 'sidebarContent',
+      title: 'Sidebar List',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'string',
+            },
+          ],
+        },
+      ],
+    }),
+    defineField({
+      name: 'headers',
+      title: 'Headers',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'string',
+            },
+          ],
+        },
+      ],
+    }),
+    defineField({
+      name: 'breadcrumbs',
+      title: 'Breadcrumbs',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'string',
+            },
+          ],
+        },
+      ],
+    }),
   ],
 
   preview: {
