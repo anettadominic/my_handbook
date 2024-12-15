@@ -3,6 +3,7 @@ import Layout from "./components/Containers/Layout";
 import Home from "./pages/Home";
 import Post from "./pages/Post";
 import AppProviders from "./context/AppProviders";
+import NotFound from "./pages/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,14 @@ const router = createBrowserRouter([
         path: "/:id",
         element: <Post />,
       },
+      {
+        path:'not-found',
+        element:<NotFound/>
+      },
+      {
+        path:'*',
+        element: <NotFound/>
+      }
     ],
   },
 ]);

@@ -1,15 +1,41 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSidebar } from "../context/SidebarContext";
 import { useState, useEffect } from "react";
 import { sanityClient } from "../sanity";
 import PortableTextComponent from "../components/PortableText/PortableText";
-import '../assets/css/post.css'
+import "../assets/css/post.css";
+import { urlFor } from "../sanity";
+import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
+import Header from "../components/Header/Header";
 
 const Post = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { setSidebarContent } = useSidebar();
   const [post, setPost] = useState(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const query = `*[_type == "category"] | order(sortOrder asc) {
+          _id,
+          title,
+          description,
+          slug,
+          "imageUrl": image.asset->url
+        }`;
+
+        const results = await sanityClient.fetch(query);
+        setCategories(results);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -36,13 +62,13 @@ const Post = () => {
         if (results && results.length > 0) {
           const postData = results[0];
           setPost(postData);
-          setSidebarContent(postData.sidebarContent);
+          setSidebarContent(postData?.sidebarContent);
         } else {
-          setError("Post not found.");
+          setError(true);
         }
       } catch (error) {
         console.error("Error fetching post:", error);
-        setError("An error occurred while fetching the post.");
+        setError(true);
       }
     };
 
@@ -50,12 +76,14 @@ const Post = () => {
   }, [id, setSidebarContent]);
 
   if (error) {
-    return <div>{error}</div>;
+    navigate("/not-found");
+    return null;
   }
 
   return (
     post && (
       <>
+        <Header headData={categories} />
         <div className="p-6 max-w-4xl mx-auto bg-white shadow-lg rounded-lg">
           <h1 className="text-2xl text-center font-bold text-gray-800 mb-4">
             {post?.title}
@@ -63,10 +91,10 @@ const Post = () => {
 
           <div className="w-full overflow-hidden rounded-lg mb-6">
             <img
-              src={post?.mainImage}
+              src={urlFor(post?.mainImage).quality().url()}
               alt="main-image"
               className="w-full object-cover"
-              style={{ height: "15vh", maxHeight: "20vh" }} 
+              style={{ maxHeight: "20vh" }}
             />
           </div>
 

@@ -1,10 +1,12 @@
 import React from "react";
 import { useSidebar } from "../../context/SidebarContext";
+import { Link } from 'react-router-dom';
 
 export default function Sidebar() {
   const { isSidebarOpen, sidebarContent, toggleSidebar } = useSidebar();
 
   return (
+    sidebarContent?.length>0 &&
     <div className="flex">
       {/* Sidebar */}
       <div
@@ -12,10 +14,10 @@ export default function Sidebar() {
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 md:static md:w-64`}
       >
-        <div className="p-4 font-bold text-lg">{process.env.PROJECT_NAME}</div>
+        <div className="p-4 font-bold text-lg">MY HANDBOOK</div>
         <ul className="p-4 space-y-2">
           {sidebarContent?.map((item) => (
-            <li className="hover:bg-gray-500 p-2 rounded">{item?.title}</li>
+            <li className="hover:bg-gray-500 p-2 rounded"><Link to={item?.url}>{item?.title}</Link></li>
           ))}
         
         </ul>
@@ -26,7 +28,7 @@ export default function Sidebar() {
         onClick={() => toggleSidebar()}
         className="md:hidden fixed top-4 left-4 bg-gray-600 text-white p-2 rounded focus:outline-none z-50"
       >
-        {isSidebarOpen ? "Close" : "Open"}
+        {isSidebarOpen ? "<" : ">"}
       </button>
     </div>
   );

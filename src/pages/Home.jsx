@@ -10,13 +10,14 @@ const Home = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const query = `*[_type == "category"]{
+        const query = `*[_type == "category"] | order(sortOrder asc) {
           _id,
           title,
           description,
           slug,
           "imageUrl": image.asset->url
         }`;
+        
 
         const results = await sanityClient.fetch(query);
         setCategories(results);
