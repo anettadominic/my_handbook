@@ -20,6 +20,12 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'sortOrder',
+      title: 'Sort Value',
+      type: 'number',
+      
+    }),
+    defineField({
       name: 'image',
       title: 'Image',
       type: 'image',
