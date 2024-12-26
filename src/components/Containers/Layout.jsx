@@ -1,8 +1,6 @@
 import {  Outlet } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
 import Sidebar from "../Sidebar/Sidebar";
 import useIsIndexPage from "../../hooks/useIsIndexPage"; 
-import Header from "../Header/Header";
 
 const Layout = () => {
  const isIndexPage = useIsIndexPage();

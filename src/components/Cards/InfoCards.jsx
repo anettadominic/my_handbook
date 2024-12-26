@@ -5,7 +5,6 @@ const InfoCard = ({ image, title, description, buttonText, onButtonClick }) => {
           {image ? (
             <img
               className="w-full h-full object-cover"
-              src={image}
               alt="Card Image"
             />
           ) : (

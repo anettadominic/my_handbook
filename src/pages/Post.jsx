@@ -5,7 +5,6 @@ import { sanityClient } from "../sanity";
 import PortableTextComponent from "../components/PortableText/PortableText";
 import "../assets/css/post.css";
 import { urlFor } from "../sanity";
-import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 import Header from "../components/Header/Header";
 
 const Post = () => {
